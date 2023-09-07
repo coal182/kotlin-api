@@ -1,4 +1,4 @@
-package com.codely.course.domain
+package com.codely.course.domain.course
 
 import java.time.LocalDateTime
 import java.util.UUID
@@ -24,13 +24,27 @@ data class CourseName(val value: String) {
         }
     }
 }
+
+data class CourseDescription(val value: String) {
+    init {
+        validate()
+    }
+
+    private fun validate() {
+        if (value.isEmpty() || value.isBlank() || value.length > 150){
+            throw InvalidCourseDescriptionException(value)
+        }
+    }
+}
+@Suppress("DataClassPrivateConstructor")
 data class Course private constructor(
     val id: CourseId,
     val name: CourseName,
+    val description: CourseDescription,
     val createdAt: LocalDateTime
 ) {
     companion object {
-        fun from(id: String, name: String, createdAt: LocalDateTime) =
-            Course(CourseId.fromString(id), CourseName(name), LocalDateTime.now())
+        fun from(id: String, name: String, description: String, createdAt: LocalDateTime) =
+            Course(CourseId.fromString(id), CourseName(name), CourseDescription(description), createdAt)
     }
 }

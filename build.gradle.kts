@@ -5,7 +5,6 @@ plugins {
     id("com.diffplug.spotless") version "5.7.0"
     id("org.springframework.boot") version "2.7.2"
     id("io.spring.dependency-management") version "1.0.12.RELEASE"
-    id("idea")
     kotlin("plugin.spring") version "1.6.21"
     application
 }
@@ -18,30 +17,10 @@ repositories {
     mavenCentral()
 }
 
-sourceSets {
-    create("test-integration") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
-}
-
-val testIntegrationImplementation: Configuration by configurations.getting {
-    extendsFrom(configurations.testImplementation.get())
-}
-
-configurations["testIntegrationRuntimeOnly"].extendsFrom(configurations.testRuntimeOnly.get())
-
-val integrationTest = task<Test>("integrationTest") {
-    description = "Runs integration tests."
-    group = "verification"
-    testClassesDirs = sourceSets["test-integration"].output.classesDirs
-    classpath = sourceSets["test-integration"].runtimeClasspath
-    useJUnitPlatform()
-    shouldRunAfter("test")
-}
-
 dependencies {
-    implementation(":contexts:course")
+    // internal dependencies
+    implementation(project(":contexts:course"))
+
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -51,7 +30,6 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.boot:spring-boot-test:2.7.2")
     testImplementation("io.mockk:mockk:1.12.5")
 }
 
@@ -81,6 +59,5 @@ spotless {
 }
 
 tasks.check {
-    dependsOn(integrationTest)
     dependsOn(tasks.spotlessCheck)
 }
