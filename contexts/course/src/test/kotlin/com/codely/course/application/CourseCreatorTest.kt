@@ -1,7 +1,11 @@
 package com.codely.course.application
 
 import com.codely.course.BaseTest
-import com.codely.course.domain.course.*
+import com.codely.course.domain.course.Course
+import com.codely.course.domain.course.InvalidCourseIdException
+import com.codely.course.domain.course.InvalidCourseNameException
+import com.codely.course.domain.course.InvalidCourseDescriptionException
+import com.codely.course.domain.course.CourseRepository
 import io.mockk.mockk
 import io.mockk.verify
 import java.time.LocalDateTime
