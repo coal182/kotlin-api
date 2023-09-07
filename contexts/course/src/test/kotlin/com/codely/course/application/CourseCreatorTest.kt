@@ -2,10 +2,10 @@ package com.codely.course.application
 
 import com.codely.course.BaseTest
 import com.codely.course.domain.course.Course
+import com.codely.course.domain.course.CourseRepository
+import com.codely.course.domain.course.InvalidCourseDescriptionException
 import com.codely.course.domain.course.InvalidCourseIdException
 import com.codely.course.domain.course.InvalidCourseNameException
-import com.codely.course.domain.course.InvalidCourseDescriptionException
-import com.codely.course.domain.course.CourseRepository
 import io.mockk.mockk
 import io.mockk.verify
 import java.time.LocalDateTime
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class CourseCreatorTest: BaseTest() {
+class CourseCreatorTest : BaseTest() {
     private lateinit var courseRepository: CourseRepository
     private lateinit var courseCreator: CourseCreator
 
@@ -25,26 +25,26 @@ class CourseCreatorTest: BaseTest() {
     }
 
     @Test
-    fun `should create a course successfully`(){
+    fun `should create a course successfully`() {
         givenFixedDate(fixedDate)
         courseCreator.create(id, name, description)
         thenTheCourseShouldBeSaved()
     }
 
     @Test
-    fun `should fails with invalid id`(){
+    fun `should fails with invalid id`() {
         givenFixedDate(fixedDate)
         assertThrows<InvalidCourseIdException> { courseCreator.create("Invalid", name, description) }
     }
 
     @Test
-    fun `should fail with invalid name`(){
+    fun `should fail with invalid name`() {
         givenFixedDate(fixedDate)
         assertThrows<InvalidCourseNameException> { courseCreator.create(id, "    ", description) }
     }
 
     @Test
-    fun `should fail with invalid description`(){
+    fun `should fail with invalid description`() {
         givenFixedDate(fixedDate)
         assertThrows<InvalidCourseDescriptionException> { courseCreator.create(id, name, greaterThan150Description) }
     }

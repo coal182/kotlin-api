@@ -19,7 +19,7 @@ data class CourseName(val value: String) {
     }
 
     private fun validate() {
-        if (value.isEmpty() || value.isBlank()){
+        if (value.isEmpty() || value.isBlank()) {
             throw InvalidCourseNameException(value)
         }
     }
@@ -31,7 +31,7 @@ data class CourseDescription(val value: String) {
     }
 
     private fun validate() {
-        if (value.isEmpty() || value.isBlank() || value.length > 150){
+        if (value.isEmpty() || value.isBlank() || value.length > 150) {
             throw InvalidCourseDescriptionException(value)
         }
     }
