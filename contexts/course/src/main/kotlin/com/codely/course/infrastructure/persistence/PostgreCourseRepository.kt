@@ -10,10 +10,11 @@ class PostgreCourseRepository(private val jdbcTemplate: NamedParameterJdbcTempla
         MapSqlParameterSource()
             .addValue("id", course.id.value)
             .addValue("name", course.name.value)
+            .addValue("description", course.description.value)
             .addValue("createdAt", course.createdAt)
             .let { params ->
                 jdbcTemplate.update(
-                    "INSERT INTO course (id, name, created_at) VALUES (:id,:name,:createdAt)",
+                    "INSERT INTO course (id, name, description, created_at) VALUES (:id,:name,:description,:createdAt)",
                     params
                 )
             }

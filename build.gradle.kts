@@ -18,6 +18,26 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    create("test-integration") {
+        compileClasspath += sourceSets.main.get().output
+        runtimeClasspath += sourceSets.main.get().output
+    }
+}
+
+val testIntegrationImplementation: Configuration by configurations.getting {
+    extendsFrom(configurations.testImplementation.get())
+}
+
+val integrationTest = task<Test>("integrationTest") {
+    description = "Runs integration tests."
+    group = "verification"
+    testClassesDirs = sourceSets["test-integration"].output.classesDirs
+    classpath = sourceSets["test-integration"].runtimeClasspath
+    useJUnitPlatform()
+    shouldRunAfter("test")
+}
+
 dependencies {
     // internal dependencies
     implementation(project(":contexts:course"))
@@ -37,6 +57,10 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.mockk:mockk:1.12.5")
+    testIntegrationImplementation("org.testcontainers:testcontainers:1.17.3")
+    testIntegrationImplementation("org.testcontainers:jdbc:1.17.3")
+    testIntegrationImplementation("org.testcontainers:junit-jupiter:1.17.3")
+    testIntegrationImplementation("org.testcontainers:postgresql:1.17.3")
 }
 
 tasks.withType<KotlinCompile> {
