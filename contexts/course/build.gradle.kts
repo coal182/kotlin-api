@@ -15,6 +15,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.diffplug.spotless:spotless-plugin-gradle:6.9.0")
     implementation("org.springframework:spring-jdbc:5.3.22")
+    implementation("org.springframework:spring-web:5.3.22")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("io.mockk:mockk:1.12.5")
