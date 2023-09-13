@@ -61,6 +61,9 @@ dependencies {
     testIntegrationImplementation("org.testcontainers:jdbc:1.17.3")
     testIntegrationImplementation("org.testcontainers:junit-jupiter:1.17.3")
     testIntegrationImplementation("org.testcontainers:postgresql:1.17.3")
+    // rest-assured 4.5.1 por problemas de compatibilidad https://github.com/rest-assured/rest-assured/issues/1612
+    testIntegrationImplementation("io.rest-assured:rest-assured:4.5.1")
+    testIntegrationImplementation("io.rest-assured:kotlin-extensions:4.5.1")
 }
 
 tasks.withType<KotlinCompile> {

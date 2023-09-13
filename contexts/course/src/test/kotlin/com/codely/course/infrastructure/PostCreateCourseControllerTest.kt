@@ -12,11 +12,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import java.net.URI
 import kotlin.test.assertEquals
 
 class PostCreateCourseControllerTest {
-    private lateinit var courseCreator: CourseCreator;
-    private lateinit var controller: PostCreateCourseController;
+    private lateinit var courseCreator: CourseCreator
+    private lateinit var controller: PostCreateCourseController
 
     @BeforeEach
     fun setUp(){
@@ -28,9 +29,10 @@ class PostCreateCourseControllerTest {
     fun `should return a successful response`() {
         every { courseCreator.create(any(), any(), any()) } returns Unit
 
-        val response = controller.execute(CreateCourseRequest("97fa5af4-bd81-45d5-974f-d5a3970af252", "Test 1", "Description Test 1"))
+        val courseId = "03ef970b-719d-49c5-8d80-7dc762fe4be6"
+        val response = controller.execute(CreateCourseRequest(courseId, "Test", "Description Test"))
 
-        assertEquals(ResponseEntity.ok().build(), response)
+        assertEquals(ResponseEntity.created(URI.create("/course/$courseId")).build(), response)
 
     }
 
@@ -40,9 +42,9 @@ class PostCreateCourseControllerTest {
 
         every { courseCreator.create(any(), any(), any()) } throws InvalidCourseIdException(invalidId, null)
 
-        val response = controller.execute(CreateCourseRequest(invalidId, "Test 1", "Description Test 1"))
+        val response = controller.execute(CreateCourseRequest(invalidId, "Test", "Description Test"))
 
-        assertEquals(ResponseEntity.badRequest().body("The id <$invalidId> is not a valid course id"), response)
+        assertEquals(ResponseEntity.badRequest().body("The course id is not valid"), response)
     }
 
     @Test
@@ -53,7 +55,7 @@ class PostCreateCourseControllerTest {
 
         val response = controller.execute(CreateCourseRequest("03ef970b-719d-49c5-8d80-7dc762fe4be6", invalidName, "Description Test 1"))
 
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The name <$invalidName> is not a valid course name"), response)
+        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The course name is not valid"), response)
     }
 
     @Test
@@ -64,7 +66,7 @@ class PostCreateCourseControllerTest {
 
         val response = controller.execute(CreateCourseRequest("03ef970b-719d-49c5-8d80-7dc762fe4be6", "Test 1", invalidDescription))
 
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The description <$invalidDescription> is not a valid course description"), response)
+        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The course description is not valid"), response)
     }
 
     @Test
