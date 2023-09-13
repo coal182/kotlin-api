@@ -1,19 +1,15 @@
-package shared.persistence
+package com.codely.shared.persistence
 
-import com.codely.Application
+import com.codely.config.DatabaseConfig
 import io.mockk.unmockkAll
 import org.junit.jupiter.api.AfterEach
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.context.annotation.Import
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.ContextConfiguration
 import org.testcontainers.containers.PostgreSQLContainer
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ContextConfiguration(classes = [Application::class])
+@Import(DatabaseConfig::class)
 @ActiveProfiles("test")
-class BaseIntegrationTest {
+open class BaseIntegrationTest {
 
     init {
         postgresContainer.start()

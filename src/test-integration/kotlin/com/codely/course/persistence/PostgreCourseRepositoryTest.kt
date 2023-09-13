@@ -1,4 +1,4 @@
-package course.persistence
+package com.codely.course.persistence
 
 import com.codely.course.domain.course.Course
 import com.codely.course.infrastructure.persistence.PostgreCourseRepository
@@ -9,8 +9,12 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapper
-import shared.persistence.BaseIntegrationTest
+import com.codely.shared.persistence.BaseIntegrationTest
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class PostgreCourseRepositoryTest : BaseIntegrationTest() {
 
     @Autowired
