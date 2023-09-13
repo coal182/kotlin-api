@@ -18,7 +18,7 @@ class PostCreateCourseController(private val courseCreator: CourseCreator) {
     ): ResponseEntity<String> {
         return try {
             courseCreator.create(request.id, request.name, request.description)
-            ResponseEntity.ok().body("")
+            ResponseEntity.ok().build()
         } catch (exception: Throwable) {
             when (exception) {
                 is InvalidCourseIdException,
@@ -27,7 +27,7 @@ class PostCreateCourseController(private val courseCreator: CourseCreator) {
                     .status(HttpStatus.BAD_REQUEST)
                     .body(exception.message)
 
-                else -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went bad")
+                else -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
             }
         }
     }
