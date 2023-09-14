@@ -1,6 +1,7 @@
 package com.codely.course.infrastructure.persistence
 
 import com.codely.course.domain.course.Course
+import com.codely.course.domain.course.CourseId
 import com.codely.course.domain.course.CourseRepository
 
 class DatabaseConnectionData(var username: String = "", var password: String = "")
@@ -15,5 +16,5 @@ class InMemoryCourseRepository(private val connectionData: DatabaseConnectionDat
         repository.add(course)
     }
 
-    override fun getAll() = repository.toTypedArray()
+    override fun find(id: CourseId) = repository.toTypedArray()[0]
 }

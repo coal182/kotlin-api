@@ -17,7 +17,6 @@ class PostCreateCourseController(private val courseCreator: CourseCreator) {
     fun execute(
         @RequestBody request: CreateCourseRequest
     ): ResponseEntity<String> {
-        println("---------------------------------------------------------------")
         return try {
             courseCreator.create(request.id, request.name, request.description)
             ResponseEntity.created(URI.create("/course/${request.id}")).build()

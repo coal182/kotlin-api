@@ -53,6 +53,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core:8.5.13")
     implementation("com.h2database:h2")
     implementation("org.postgresql:postgresql:42.4.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -64,6 +65,7 @@ dependencies {
     // rest-assured 4.5.1 por problemas de compatibilidad https://github.com/rest-assured/rest-assured/issues/1612
     testIntegrationImplementation("io.rest-assured:rest-assured:4.5.1")
     testIntegrationImplementation("io.rest-assured:kotlin-extensions:4.5.1")
+    testIntegrationImplementation(project(":common-test"))
 }
 
 tasks.withType<KotlinCompile> {

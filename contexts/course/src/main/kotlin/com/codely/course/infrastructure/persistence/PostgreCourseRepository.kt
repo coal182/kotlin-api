@@ -1,6 +1,7 @@
 package com.codely.course.infrastructure.persistence
 
 import com.codely.course.domain.course.Course
+import com.codely.course.domain.course.CourseId
 import com.codely.course.domain.course.CourseRepository
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
@@ -20,7 +21,7 @@ class PostgreCourseRepository(private val jdbcTemplate: NamedParameterJdbcTempla
             }
     }
 
-    override fun getAll(): Array<Course> {
+    override fun find(id: CourseId): Course {
         TODO("Not yet implemented")
     }
 }
