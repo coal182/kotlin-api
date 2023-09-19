@@ -1,4 +1,4 @@
-package com.codely.course.domain
+package com.codely.shared.domain
 
 import java.time.LocalDateTime
 

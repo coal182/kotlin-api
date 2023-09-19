@@ -1,7 +1,5 @@
 package com.codely.course.domain
 
-import com.codely.course.domain.course.CourseId
-
 sealed class CourseError(message: String) : Error()
 
 data class CourseNotFoundError(val id: CourseId) : CourseError("The course with id <${id.value}> was not found")

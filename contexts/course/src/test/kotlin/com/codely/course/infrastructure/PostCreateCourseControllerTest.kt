@@ -1,9 +1,9 @@
 package com.codely.course.infrastructure
 
 import com.codely.course.application.CourseCreator
-import com.codely.course.domain.course.InvalidCourseDescriptionException
-import com.codely.course.domain.course.InvalidCourseIdException
-import com.codely.course.domain.course.InvalidCourseNameException
+import com.codely.course.domain.InvalidCourseDescriptionException
+import com.codely.course.domain.InvalidCourseIdException
+import com.codely.course.domain.InvalidCourseNameException
 import com.codely.course.infrastructure.rest.CreateCourseRequest
 import com.codely.course.infrastructure.rest.PostCreateCourseController
 import io.mockk.every

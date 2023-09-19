@@ -1,6 +1,6 @@
 package com.codely.course
 
-import com.codely.course.domain.Clock
+import com.codely.shared.domain.Clock
 import io.mockk.every
 import io.mockk.unmockkAll
 import java.time.LocalDateTime

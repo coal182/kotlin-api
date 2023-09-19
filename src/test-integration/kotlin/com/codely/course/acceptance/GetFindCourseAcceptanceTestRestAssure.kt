@@ -24,7 +24,7 @@ class GetFindCourseAcceptanceTestRestAssure: BaseAcceptanceTest() {
     @Sql("classpath:db/fixtures/find/add-course-data.sql")
     fun `should find course successfully with fixture`() {
         When {
-            get("/course/${course.id}")
+            get("/course/${course.id.value}")
         } Then {
             statusCode(HttpStatus.OK.value())
         } Extract {
@@ -39,7 +39,7 @@ class GetFindCourseAcceptanceTestRestAssure: BaseAcceptanceTest() {
             contentType(ContentType.JSON)
             body("")
         } When {
-            get("/course/${course.id}")
+            get("/course/${course.id.value}")
         } Then {
             statusCode(HttpStatus.OK.value())
         } Extract {
@@ -66,7 +66,7 @@ class GetFindCourseAcceptanceTestRestAssure: BaseAcceptanceTest() {
                     "id": "${course.id.value}",
                     "name": "${course.name.value}",
                     "description": "${course.description.value}",
-                    "created_at": "${course.createdAt}"
+                    "createdAt": "${course.createdAt}"
                 }
             """.trimIndent()
     }

@@ -1,9 +1,9 @@
 package com.codely.course.infrastructure.rest
 
 import com.codely.course.application.CourseCreator
-import com.codely.course.domain.course.InvalidCourseDescriptionException
-import com.codely.course.domain.course.InvalidCourseIdException
-import com.codely.course.domain.course.InvalidCourseNameException
+import com.codely.course.domain.InvalidCourseDescriptionException
+import com.codely.course.domain.InvalidCourseIdException
+import com.codely.course.domain.InvalidCourseNameException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping

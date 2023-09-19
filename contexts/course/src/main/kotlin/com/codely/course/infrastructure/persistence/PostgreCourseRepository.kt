@@ -1,10 +1,11 @@
 package com.codely.course.infrastructure.persistence
 
-import com.codely.course.domain.course.Course
-import com.codely.course.domain.course.CourseId
-import com.codely.course.domain.course.CourseRepository
+import com.codely.course.domain.*
+import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
+import java.sql.ResultSet
 
 class PostgreCourseRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) : CourseRepository {
     override fun save(course: Course) {
@@ -21,7 +22,23 @@ class PostgreCourseRepository(private val jdbcTemplate: NamedParameterJdbcTempla
             }
     }
 
-    override fun find(id: CourseId): Course {
-        TODO("Not yet implemented")
+    override fun find(id: CourseId): Course? {
+        val query = "SELECT * FROM course where id=:id"
+        val params = MapSqlParameterSource().addValue("id", id.value.toString())
+        return try {
+            jdbcTemplate.queryForObject(query, params, mapRow())
+        } catch (emptyResultException: EmptyResultDataAccessException) {
+            null
+        }
+    }
+
+    private fun mapRow(): RowMapper<Course> {
+        return RowMapper { rs: ResultSet, _: Int ->
+            val id = rs.getString("id")
+            val name = rs.getString("name")
+            val description = rs.getString("description")
+            val createdAt = rs.getTimestamp("created_at").toLocalDateTime()
+            Course.from(id, name, description, createdAt)
+        }
     }
 }

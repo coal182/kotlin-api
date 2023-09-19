@@ -1,6 +1,6 @@
 package com.codely.common.course
 
-import com.codely.course.domain.course.Course
+import com.codely.course.domain.Course
 import java.time.LocalDateTime
 
 object CourseMother {
