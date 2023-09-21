@@ -1,3 +1,4 @@
+server.shutdown: graceful
 database.connection:
   username: ${DATABASE_USERNAME:empty-username}
   password: ${DATABASE_PASSWORD:empty-password}
@@ -13,3 +14,5 @@ spring:
     hibernate:
       ddl-auto: validate
     open-in-view: false
+  lifecycle:
+    timeout-per-shutdown-phase: 10s

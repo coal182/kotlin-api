@@ -90,6 +90,29 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Find Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/course/97fa5af4-bd81-45d5-974f-d5a3970af252",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"course",
+								"97fa5af4-bd81-45d5-974f-d5a3970af252"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
