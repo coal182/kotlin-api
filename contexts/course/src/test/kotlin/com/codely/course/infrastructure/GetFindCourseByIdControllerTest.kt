@@ -40,7 +40,7 @@ class GetFindCourseByIdControllerTest {
     private fun `when a course is requested by id`() = controller.execute(courseId)
 
     private fun `given a course response`() {
-        every { courseFinder.execute(any()) } returns course
+        every { courseFinder.execute(any()) } returns Result.success(course)
     }
 
     @Test
@@ -60,7 +60,9 @@ class GetFindCourseByIdControllerTest {
     }
 
     private fun `given there is no course found`() {
-        every { courseFinder.execute(any()) } throws CourseNotFoundException(CourseId.fromString(courseId))
+        every { courseFinder.execute(any()) } returns Result.failure(
+            CourseNotFoundException(CourseId.fromString(courseId))
+        )
     }
 
     companion object {

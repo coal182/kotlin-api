@@ -2,16 +2,17 @@ package com.codely.course.application.find
 
 import com.codely.course.domain.Course
 import com.codely.course.domain.CourseId
-import com.codely.course.domain.CourseNotFoundException
 import com.codely.course.domain.CourseRepository
 import java.time.LocalDateTime
 
 class CourseFinder(private val courseRepository: CourseRepository) {
-    fun execute(courseId: String) =
+    fun execute(courseId: String): Result<CourseResponse> =
         CourseId.fromString(courseId).let { id ->
-            courseRepository.find(id)?.let {
-                CourseResponse.fromCourse(it)
-            } ?: throw CourseNotFoundException(id)
+            val course = courseRepository.find(id)
+            course.fold(
+                onSuccess = { Result.success(CourseResponse.fromCourse(it)) },
+                onFailure = { Result.failure(it) }
+            )
         }
 }
 

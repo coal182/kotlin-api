@@ -9,11 +9,10 @@ import com.codely.course.domain.CourseNotFoundException
 import com.codely.course.domain.CourseRepository
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.time.LocalDateTime
 import kotlin.test.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class CourseFinderTest : BaseTest() {
 
@@ -22,7 +21,7 @@ class CourseFinderTest : BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        courseRepository = mockk(relaxUnitFun = true)
+        courseRepository = mockk()
         courseFinder = CourseFinder(courseRepository)
     }
 
@@ -39,41 +38,55 @@ class CourseFinderTest : BaseTest() {
     fun `should throw an exception when course is not found`() {
         `given no course is saved`()
 
-        assertThrows<CourseNotFoundException> { `when the finder is executed`() }
+        val actualResult = `when the finder is executed`()
+
+        `then the result is a failure with no found exception`(actualResult)
+    }
+
+    private fun `then the result is a failure with no found exception`(actualResult: Result<CourseResponse>) {
+        val expected = Result.failure<CourseResponse>(
+            CourseNotFoundException(courseId)
+        )
+        assertEquals(expected, actualResult)
     }
 
     private fun `given no course is saved`() {
-        every { courseRepository.find(any()) } throws CourseNotFoundException(CourseId.fromString(courseId))
+        every { courseRepository.find(courseId) } returns Result.failure(CourseNotFoundException(courseId))
     }
 
-    private fun `then the found course is equals to expected`(actualCourse: CourseResponse) {
-        val expected = CourseResponse(
-            id = courseId,
-            name = courseName,
-            description = courseDescription,
-            createdAt = courseCreatedAt
+    private fun `then the found course is equals to expected`(actualCourse: Result<CourseResponse>) {
+        val expected = Result.success(
+            CourseResponse(
+                id = id,
+                name = courseName,
+                description = courseDescription,
+                createdAt = courseCreatedAt
+            )
         )
 
         assertEquals(expected, actualCourse)
     }
 
-    private fun `when the finder is executed`(): CourseResponse {
-        return courseFinder.execute(courseId)
+    private fun `when the finder is executed`(): Result<CourseResponse> {
+        return courseFinder.execute(id)
     }
 
     private fun `given an saved course`() {
-        every { courseRepository.find(any()) } returns CourseMother.sample(
-            id = courseId,
+        val course = CourseMother.sample(
+            id = id,
             name = courseName,
             description = courseDescription,
             createdAt = courseCreatedAt
         )
+
+        every { courseRepository.find(course.id) } returns Result.success(course)
     }
 
     companion object {
-        private const val courseId = "7ab75530-5da7-4b4a-b083-a779dd6c759e"
+        private val id = "7ab75530-5da7-4b4a-b083-a779dd6c759e"
+        private val courseId = CourseId.fromString(id)
         private const val courseName = "Course Finder Test Name"
-        private const val courseDescription = "Course Finder Test Description"
+        private const val courseDescription = "Course Finder Test Name"
         private val courseCreatedAt = LocalDateTime.parse("2022-08-31T09:00:00")
     }
 }

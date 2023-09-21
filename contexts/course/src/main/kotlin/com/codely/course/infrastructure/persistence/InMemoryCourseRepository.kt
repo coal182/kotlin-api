@@ -16,5 +16,5 @@ class InMemoryCourseRepository(private val connectionData: DatabaseConnectionDat
         repository.add(course)
     }
 
-    override fun find(id: CourseId) = repository.toTypedArray()[0]
+    override fun find(id: CourseId): Result<Course> = Result.success(repository.toTypedArray()[0])
 }

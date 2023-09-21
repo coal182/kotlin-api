@@ -33,7 +33,7 @@ class PostgreCourseRepositoryTest : BaseIntegrationTest() {
 
         val courseFromDb = repository.find(CourseId.fromString(courseId))
 
-        assertEquals(courseToSave, courseFromDb)
+        assertEquals(Result.success(courseToSave), courseFromDb)
     }
 
     companion object {

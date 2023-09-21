@@ -57,7 +57,7 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.mockk:mockk:1.12.5")
+    testImplementation("io.mockk:mockk:1.12.7")
     testIntegrationImplementation("org.testcontainers:testcontainers:1.17.3")
     testIntegrationImplementation("org.testcontainers:jdbc:1.17.3")
     testIntegrationImplementation("org.testcontainers:junit-jupiter:1.17.3")

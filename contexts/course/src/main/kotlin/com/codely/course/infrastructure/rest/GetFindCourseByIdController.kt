@@ -2,6 +2,7 @@ package com.codely.course.infrastructure.rest
 
 import com.codely.course.application.find.CourseFinder
 import com.codely.course.domain.CourseNotFoundException
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -13,14 +14,14 @@ class GetFindCourseByIdController(private val courseFinder: CourseFinder) {
     @GetMapping("/course/{id}")
     fun execute(
         @PathVariable id: String
-    ) = runCatching { courseFinder.execute(id) }.fold(
+    ) = courseFinder.execute(id).fold(
         onSuccess = {
             ResponseEntity.ok().body(it)
         },
         onFailure = {
             when (it) {
-                is CourseNotFoundException -> ResponseEntity.notFound().build()
-                else -> ResponseEntity.internalServerError().build()
+                is CourseNotFoundException -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+                else -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
             }
         }
     )
