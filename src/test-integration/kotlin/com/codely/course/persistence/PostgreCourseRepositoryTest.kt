@@ -3,14 +3,14 @@ package com.codely.course.persistence
 import com.codely.common.course.CourseMother
 import com.codely.course.domain.CourseId
 import com.codely.course.infrastructure.persistence.PostgreCourseRepository
+import com.codely.shared.persistence.BaseIntegrationTest
 import java.time.LocalDateTime
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.jdbc.core.JdbcTemplate
-import com.codely.shared.persistence.BaseIntegrationTest
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.jdbc.core.JdbcTemplate
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -39,6 +39,5 @@ class PostgreCourseRepositoryTest : BaseIntegrationTest() {
     companion object {
         const val courseId = "13590efb-c181-4c5f-9f95-b768abde13e2"
         private val courseToSave = CourseMother.sample(courseId, "Test", "Test Description", LocalDateTime.of(2023, 1, 1, 0, 0))
-
     }
 }

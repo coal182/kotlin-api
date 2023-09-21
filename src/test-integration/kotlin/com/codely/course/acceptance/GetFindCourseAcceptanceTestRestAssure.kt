@@ -9,13 +9,13 @@ import io.restassured.module.kotlin.extensions.Extract
 import io.restassured.module.kotlin.extensions.Given
 import io.restassured.module.kotlin.extensions.Then
 import io.restassured.module.kotlin.extensions.When
+import java.time.LocalDateTime
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.jdbc.Sql
-import java.time.LocalDateTime
 
-class GetFindCourseAcceptanceTestRestAssure: BaseAcceptanceTest() {
+class GetFindCourseAcceptanceTestRestAssure : BaseAcceptanceTest() {
 
     @Autowired
     private lateinit var courseRepository: PostgreCourseRepository
@@ -46,7 +46,6 @@ class GetFindCourseAcceptanceTestRestAssure: BaseAcceptanceTest() {
             body().asString()
         }
         response.isEqualToJson(expectedCourseResponse)
-
     }
 
     private fun `an existent course`() {

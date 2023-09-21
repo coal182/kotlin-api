@@ -8,19 +8,19 @@ import com.codely.course.infrastructure.rest.CreateCourseRequest
 import com.codely.course.infrastructure.rest.PostCreateCourseController
 import io.mockk.every
 import io.mockk.mockk
+import java.net.URI
+import kotlin.test.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import java.net.URI
-import kotlin.test.assertEquals
 
 class PostCreateCourseControllerTest {
     private lateinit var courseCreator: CourseCreator
     private lateinit var controller: PostCreateCourseController
 
     @BeforeEach
-    fun setUp(){
+    fun setUp() {
         courseCreator = mockk()
         controller = PostCreateCourseController(courseCreator)
     }
@@ -33,7 +33,6 @@ class PostCreateCourseControllerTest {
         val response = controller.execute(CreateCourseRequest(courseId, "Test", "Description Test"))
 
         assertEquals(ResponseEntity.created(URI.create("/course/$courseId")).build(), response)
-
     }
 
     @Test
@@ -70,7 +69,7 @@ class PostCreateCourseControllerTest {
     }
 
     @Test
-    fun `should fail when there is an unhandled exception`(){
+    fun `should fail when there is an unhandled exception`() {
         every { courseCreator.create(any(), any(), any()) } throws Throwable()
 
         val response = controller.execute(CreateCourseRequest("03ef970b-719d-49c5-8d80-7dc762fe4be6", "Test", "Description Test"))
@@ -79,5 +78,4 @@ class PostCreateCourseControllerTest {
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .build(), response)
     }
-
 }

@@ -7,25 +7,25 @@ import com.codely.course.domain.CourseNotFoundException
 import com.codely.course.infrastructure.rest.GetFindCourseByIdController
 import io.mockk.every
 import io.mockk.mockk
+import java.time.LocalDateTime
+import kotlin.test.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import java.time.LocalDateTime
-import kotlin.test.assertEquals
 
 class GetFindCourseByIdControllerTest {
     private lateinit var courseFinder: CourseFinder
     private lateinit var controller: GetFindCourseByIdController
 
     @BeforeEach
-    fun setUp(){
+    fun setUp() {
         courseFinder = mockk()
         controller = GetFindCourseByIdController(courseFinder)
     }
 
     @Test
-    fun `should return the course response`(){
+    fun `should return the course response`() {
         `given a course response`()
 
         val response = `when a course is requested by id`()

@@ -4,8 +4,8 @@ import com.codely.shared.database.PostgresTestUtils
 import com.codely.shared.database.TestConfig
 import io.mockk.unmockkAll
 import io.restassured.RestAssured
-import org.junit.jupiter.api.AfterAll
 import java.io.File
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach

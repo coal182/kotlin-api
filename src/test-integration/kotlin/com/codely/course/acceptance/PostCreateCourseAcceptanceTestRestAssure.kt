@@ -8,10 +8,10 @@ import io.restassured.module.kotlin.extensions.When
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 
-class PostCreateCourseAcceptanceTestRestAssure: BaseAcceptanceTest() {
+class PostCreateCourseAcceptanceTestRestAssure : BaseAcceptanceTest() {
 
     @Test
-    fun `should create a course succesfully`(){
+    fun `should create a course succesfully`() {
         Given {
             contentType(ContentType.JSON)
             body(
@@ -25,7 +25,7 @@ class PostCreateCourseAcceptanceTestRestAssure: BaseAcceptanceTest() {
             )
         } When {
             post("/course")
-        } Then  {
+        } Then {
             statusCode(HttpStatus.CREATED.value())
         }
     }
