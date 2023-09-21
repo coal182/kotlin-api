@@ -1,6 +1,9 @@
 package com.codely.course.infrastructure.persistence
 
+import com.codely.common.Either
+import com.codely.common.Right
 import com.codely.course.domain.Course
+import com.codely.course.domain.CourseError
 import com.codely.course.domain.CourseId
 import com.codely.course.domain.CourseRepository
 
@@ -16,5 +19,5 @@ class InMemoryCourseRepository(private val connectionData: DatabaseConnectionDat
         repository.add(course)
     }
 
-    override fun find(id: CourseId): Result<Course> = Result.success(repository.toTypedArray()[0])
+    override fun find(id: CourseId): Either<CourseError, Course> = Right(repository.toTypedArray()[0])
 }

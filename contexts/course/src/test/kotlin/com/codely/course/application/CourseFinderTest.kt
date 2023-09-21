@@ -1,11 +1,15 @@
 package com.codely.course.application
 
+import com.codely.common.Either
+import com.codely.common.Left
+import com.codely.common.Right
 import com.codely.common.course.CourseMother
 import com.codely.course.BaseTest
 import com.codely.course.application.find.CourseFinder
 import com.codely.course.application.find.CourseResponse
+import com.codely.course.domain.CourseError
 import com.codely.course.domain.CourseId
-import com.codely.course.domain.CourseNotFoundException
+import com.codely.course.domain.CourseNotFoundError
 import com.codely.course.domain.CourseRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -43,19 +47,19 @@ class CourseFinderTest : BaseTest() {
         `then the result is a failure with no found exception`(actualResult)
     }
 
-    private fun `then the result is a failure with no found exception`(actualResult: Result<CourseResponse>) {
-        val expected = Result.failure<CourseResponse>(
-            CourseNotFoundException(courseId)
+    private fun `then the result is a failure with no found exception`(actualResult: Either<CourseError, CourseResponse>) {
+        val expected = Left<CourseError>(
+            CourseNotFoundError(courseId)
         )
         assertEquals(expected, actualResult)
     }
 
     private fun `given no course is saved`() {
-        every { courseRepository.find(courseId) } returns Result.failure(CourseNotFoundException(courseId))
+        every { courseRepository.find(courseId) } returns Left(CourseNotFoundError(courseId))
     }
 
-    private fun `then the found course is equals to expected`(actualCourse: Result<CourseResponse>) {
-        val expected = Result.success(
+    private fun `then the found course is equals to expected`(actualCourse: Either<CourseError, CourseResponse>) {
+        val expected = Right(
             CourseResponse(
                 id = id,
                 name = courseName,
@@ -67,7 +71,7 @@ class CourseFinderTest : BaseTest() {
         assertEquals(expected, actualCourse)
     }
 
-    private fun `when the finder is executed`(): Result<CourseResponse> {
+    private fun `when the finder is executed`(): Either<CourseError, CourseResponse> {
         return courseFinder.execute(id)
     }
 
@@ -79,7 +83,7 @@ class CourseFinderTest : BaseTest() {
             createdAt = courseCreatedAt
         )
 
-        every { courseRepository.find(course.id) } returns Result.success(course)
+        every { courseRepository.find(course.id) } returns Right(course)
     }
 
     companion object {

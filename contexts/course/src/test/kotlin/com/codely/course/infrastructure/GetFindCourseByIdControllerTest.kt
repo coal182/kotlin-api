@@ -1,9 +1,11 @@
 package com.codely.course.infrastructure
 
+import com.codely.common.Left
+import com.codely.common.Right
 import com.codely.course.application.find.CourseFinder
 import com.codely.course.application.find.CourseResponse
 import com.codely.course.domain.CourseId
-import com.codely.course.domain.CourseNotFoundException
+import com.codely.course.domain.CourseNotFoundError
 import com.codely.course.infrastructure.rest.GetFindCourseByIdController
 import io.mockk.every
 import io.mockk.mockk
@@ -40,7 +42,7 @@ class GetFindCourseByIdControllerTest {
     private fun `when a course is requested by id`() = controller.execute(courseId)
 
     private fun `given a course response`() {
-        every { courseFinder.execute(any()) } returns Result.success(course)
+        every { courseFinder.execute(any()) } returns Right(course)
     }
 
     @Test
@@ -60,8 +62,8 @@ class GetFindCourseByIdControllerTest {
     }
 
     private fun `given there is no course found`() {
-        every { courseFinder.execute(any()) } returns Result.failure(
-            CourseNotFoundException(CourseId.fromString(courseId))
+        every { courseFinder.execute(any()) } returns Left(
+            CourseNotFoundError(CourseId.fromString(courseId))
         )
     }
 

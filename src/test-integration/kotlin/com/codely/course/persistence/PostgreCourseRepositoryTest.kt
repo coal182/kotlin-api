@@ -1,5 +1,6 @@
 package com.codely.course.persistence
 
+import com.codely.common.Right
 import com.codely.common.course.CourseMother
 import com.codely.course.domain.CourseId
 import com.codely.course.infrastructure.persistence.PostgreCourseRepository
@@ -33,7 +34,7 @@ class PostgreCourseRepositoryTest : BaseIntegrationTest() {
 
         val courseFromDb = repository.find(CourseId.fromString(courseId))
 
-        assertEquals(Result.success(courseToSave), courseFromDb)
+        assertEquals(Right(courseToSave), courseFromDb)
     }
 
     companion object {
