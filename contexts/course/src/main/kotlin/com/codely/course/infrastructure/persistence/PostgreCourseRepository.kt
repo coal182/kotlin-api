@@ -1,8 +1,12 @@
 package com.codely.course.infrastructure.persistence
 
+import com.codely.common.Either
+import com.codely.common.Left
+import com.codely.common.Right
 import com.codely.course.domain.Course
+import com.codely.course.domain.CourseError
 import com.codely.course.domain.CourseId
-import com.codely.course.domain.CourseNotFoundException
+import com.codely.course.domain.CourseNotFoundError
 import com.codely.course.domain.CourseRepository
 import java.sql.ResultSet
 import org.springframework.jdbc.core.RowMapper
@@ -24,18 +28,15 @@ class PostgreCourseRepository(private val jdbcTemplate: NamedParameterJdbcTempla
             }
     }
 
-    override fun find(id: CourseId): Result<Course> = runCatching {
+    override fun find(id: CourseId): Either<CourseError, Course> = try {
         val query = "SELECT * FROM course where id=:id"
         val params = MapSqlParameterSource().addValue("id", id.value.toString())
         jdbcTemplate.queryForObject(query, params, mapRow())
-    }.fold(
-        onSuccess = {
-            it?.let { Result.success(it) } ?: Result.failure(CourseNotFoundException(id))
-        },
-        onFailure = {
-            Result.failure(it)
-        }
-    )
+            ?.let { Right(it) }
+            ?: Left(CourseNotFoundError(id))
+    } catch (exception: Throwable) {
+            Left(CourseNotFoundError(id))
+    }
 
     private fun mapRow(): RowMapper<Course> {
         return RowMapper { rs: ResultSet, _: Int ->
