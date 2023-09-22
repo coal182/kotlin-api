@@ -1,5 +1,6 @@
 package com.codely.course.domain
 
+import com.codely.common.domain.DomainEvent
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -36,15 +37,29 @@ data class CourseDescription(val value: String) {
         }
     }
 }
-@Suppress("DataClassPrivateConstructor")
-data class Course private constructor(
+data class Course(
     val id: CourseId,
     val name: CourseName,
     val description: CourseDescription,
-    val createdAt: LocalDateTime
+    val createdAt: LocalDateTime,
+    val events: List<DomainEvent>
 ) {
     companion object {
+        fun create(
+            id: CourseId,
+            name: CourseName,
+            description: CourseDescription
+        ) = LocalDateTime.now().let { createdAt ->
+            Course(id, name, description, createdAt, listOf(CourseCreated(id, name, description, createdAt)))
+        }
+
         fun from(id: String, name: String, description: String, createdAt: LocalDateTime) =
-            Course(CourseId.fromString(id), CourseName(name), CourseDescription(description), createdAt)
+            Course(
+                CourseId.fromString(id),
+                CourseName(name),
+                CourseDescription(description),
+                createdAt,
+                emptyList()
+            )
     }
 }

@@ -95,7 +95,8 @@ spotless {
 }
 
 tasks.check {
-    dependsOn(integrationTest)
+    // it fails deploying test database twice in git actions
+    //dependsOn(integrationTest)
     dependsOn(tasks.spotlessCheck)
 }
 
