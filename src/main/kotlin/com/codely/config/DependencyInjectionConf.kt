@@ -1,7 +1,6 @@
 package com.codely.config
 
 import com.codely.common.domain.Publisher
-import com.codely.common.infrastructure.InMemoryPublisher
 import com.codely.course.application.CourseCreator
 import com.codely.course.application.find.CourseFinder
 import com.codely.course.domain.CourseRepository
@@ -14,9 +13,6 @@ class DependencyInjectionConf {
 
     @Bean
     fun clock() = LocalDateTimeClock()
-
-    @Bean
-    fun publisher() = InMemoryPublisher()
 
     @Bean
     fun courseCreator(courseRepository: CourseRepository, publisher: Publisher) = CourseCreator(courseRepository, publisher)

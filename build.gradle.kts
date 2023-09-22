@@ -38,6 +38,8 @@ val integrationTest = task<Test>("integrationTest") {
     shouldRunAfter("test")
 }
 
+val testcontainersVersion = "1.17.3"
+
 dependencies {
     // internal dependencies
     implementation(project(":contexts:course"))
@@ -55,14 +57,16 @@ dependencies {
     implementation("com.h2database:h2")
     implementation("org.postgresql:postgresql:42.4.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
+    implementation("org.apache.kafka:kafka-clients:3.3.1")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.mockk:mockk:1.12.7")
-    testIntegrationImplementation("org.testcontainers:testcontainers:1.17.3")
-    testIntegrationImplementation("org.testcontainers:jdbc:1.17.3")
-    testIntegrationImplementation("org.testcontainers:junit-jupiter:1.17.3")
-    testIntegrationImplementation("org.testcontainers:postgresql:1.17.3")
+    testIntegrationImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
+    testIntegrationImplementation("org.testcontainers:jdbc:$testcontainersVersion")
+    testIntegrationImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
+    testIntegrationImplementation("org.testcontainers:postgresql:$testcontainersVersion")
+    testIntegrationImplementation("org.testcontainers:kafka:$testcontainersVersion")
     // rest-assured 4.5.1 por problemas de compatibilidad https://github.com/rest-assured/rest-assured/issues/1612
     testIntegrationImplementation("io.rest-assured:rest-assured:4.5.1")
     testIntegrationImplementation("io.rest-assured:kotlin-extensions:4.5.1")

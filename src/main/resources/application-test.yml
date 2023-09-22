@@ -1,3 +1,6 @@
+publisher:
+  bootstrapServers: "${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}"
+  topic: ${KAFKA_TOPIC:domainEvents}
 spring:
   datasource:
     url: jdbc:tc:postgresql:14.5:///course_database

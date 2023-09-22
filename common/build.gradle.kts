@@ -20,6 +20,8 @@ dependencies {
     implementation("org.springframework:spring-jdbc:5.3.22")
     implementation("org.springframework:spring-web:5.3.22")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
+    implementation("org.apache.kafka:kafka-clients:3.3.1")
+    implementation("com.google.code.gson:gson:2.8.9")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("io.mockk:mockk:1.12.7")

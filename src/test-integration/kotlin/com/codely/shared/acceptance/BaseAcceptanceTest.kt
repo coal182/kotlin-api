@@ -33,11 +33,15 @@ class BaseAcceptanceTest {
 
     companion object {
         private const val POSTGRES_PORT = 5432
+        private const val KAFKA_PORT = 9092
+
         val environment: DockerComposeContainer<*> =
             DockerComposeContainer(File("docker-compose-test.yml"))
                 .withOptions("--compatibility")
                 .withExposedService("db", POSTGRES_PORT, Wait.forListeningPort())
+                .withExposedService("kafka", KAFKA_PORT, Wait.forListeningPort())
                 .withLocalCompose(true)
+
         @JvmStatic
         @BeforeAll
         fun start() {
